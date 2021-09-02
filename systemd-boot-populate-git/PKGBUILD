@@ -17,7 +17,7 @@ depends=(
 	'python'
 	'python-argparse'
 	'python-jinja'
-	'python-semver'
+	'python-termcolor'
 	'python-toml'
 	)
 makedepends=('git')
