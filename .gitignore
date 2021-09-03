@@ -1,5 +1,5 @@
 # makepkg files
-systemd-boot-populate/
-!systemd-boot-populate/PKGBUILD
-systemd-boot-populate-git/
-!systemd-boot-populate-git/PKGBUILD
+systemd-boot-populate/systemd-boot-populate/
+systemd-boot-populate/*.zst
+systemd-boot-populate-git/systemd-boot-populate-git/
+systemd-boot-populate-git/*.zst

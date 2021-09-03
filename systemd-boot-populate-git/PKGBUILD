@@ -2,7 +2,7 @@
 
 pkgname="systemd-boot-populate-git"
 _pkgname="systemd-boot-populate"
-pkgver=.r9
+pkgver=20210902.r10
 pkgrel=1
 arch=(
 	'x86_64'
@@ -28,11 +28,16 @@ sha512sums=('SKIP')
 
 pkgver() {
 	cd ${pkgname}
-	printf "%s.r%s" "$(git show -s --format=%ci master | sed "s/\ .*//g;s/-//g")" "$(git rev-list --count HEAD)"
+	printf "%s.r%s" "$(git show -s --format=%ci main | sed "s/\ .*//g;s/-//g")" "$(git rev-list --count HEAD)"
 }
 
 package() {
 	cd ${pkgname}
+
+	install -d -m 755 $pkgdir/etc
+	install -d -m 755 $pkgdir/usr/bin
+
 	make DESTDIR="$pkgdir" install
-	install -m 644 95-systemd-boot-populate.hook /usr/share/libalpm/hooks/95-systemd-boot-populate.hook
+	install -d -m 755 $pkgdir/usr/share/libalpm/hooks
+	install -m 644 95-systemd-boot-populate.hook $pkgdir/usr/share/libalpm/hooks/95-systemd-boot-populate.hook
 }
