@@ -34,4 +34,5 @@ pkgver() {
 package() {
 	cd ${pkgname}
 	make DESTDIR="$pkgdir" install
+	install -m 644 95-systemd-boot-populate.hook /usr/share/libalpm/hooks/95-systemd-boot-populate.hook
 }
