@@ -2,7 +2,7 @@
 
 pkgname="systemd-boot-populate-git"
 _pkgname="systemd-boot-populate"
-pkgver=0.0.1
+pkgver=.r9
 pkgrel=1
 arch=(
 	'x86_64'
