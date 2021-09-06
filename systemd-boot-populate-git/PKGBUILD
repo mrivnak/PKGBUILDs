@@ -2,7 +2,7 @@
 
 pkgname="systemd-boot-populate-git"
 _pkgname="systemd-boot-populate"
-pkgver=20210902.r10
+pkgver=20210905.r25
 pkgrel=1
 arch=(
 	'x86_64'
@@ -25,6 +25,7 @@ conflicts=($_pkgname)
 provides=($_pkgname)
 source=("${pkgname}::git+${url}.git")
 sha512sums=('SKIP')
+backup=(etc/systemd-boot-populate.toml)
 
 pkgver() {
 	cd ${pkgname}
