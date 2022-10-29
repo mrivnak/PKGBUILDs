@@ -1,0 +1,23 @@
+# Maintainer: Mike Rivnak <rivnakm1@gmail.com>
+pkgname=nerd-fonts-cascadia-mono-git
+_pkgname=nerd-fonts-cascadia-mono
+pkgver=20221027.r2
+pkgrel=1
+pkgdesc="Microsoft's Cascadia Mono font with Nerd Fonts icons"
+arch=(any)
+url="https://github.com/mrivnak/CascadiaMono-Nerd-Font"
+conflicts=($pkgname $_pkgname)
+provides=($pkgname $_pkgname ttf-font-nerd)
+source=("${pkgname}::git+${url}.git")
+sha512sums=('SKIP')
+
+pkgver() {
+	cd ${pkgname}
+	printf "%s.r%s" "$(git show -s --format=%ci main | sed "s/\ .*//g;s/-//g")" "$(git rev-list --count HEAD)"
+}
+
+package() {
+    cd ${pkgname}
+    install -d -m 755 "${pkgdir}/usr/share/fonts/Cascadia Mono Nerd Font"
+    install -m 644 *.ttf "${pkgdir}/usr/share/fonts/Cascadia Mono Nerd Font/"
+}
