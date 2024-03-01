@@ -43,7 +43,7 @@ Categories=Development
 Comment=Simple code coverage visualization tool for tarpaulin
 Exec=tarp
 Icon=tarp
-Name=tarp
+Name=Tarp
 Terminal=false
 Type=Application
 EOF
