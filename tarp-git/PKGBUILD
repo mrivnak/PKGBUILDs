@@ -1,0 +1,62 @@
+# Maintainer: Mike Rivnak <rivnakm1@gmail.com>
+pkgname=tarp-git
+_pkgname=tarp
+pkgver=20240229.r12
+pkgrel=1
+pkgdesc="Simple code coverage visualization tool for tarpaulin"
+arch=(any)
+url="https://github.com/mrivnak/tarp"
+conflicts=($pkgname $_pkgname)
+provides=($pkgname $_pkgname)
+depends=(webkit2gtk)
+makedepends=(
+    rust
+    pnpm
+    webkit2gtk
+    base-devel
+    curl
+    wget
+    file
+    openssl
+    appmenu-gtk-module
+    gtk3
+    libappindicator-gtk3
+    librsvg
+    libvips
+)
+source=("${pkgname}::git+${url}.git")
+sha512sums=('SKIP')
+
+pkgver() {
+	cd ${pkgname}
+	printf "%s.r%s" "$(git show -s --format=%ci main | sed "s/\ .*//g;s/-//g")" "$(git rev-list --count HEAD)"
+}
+
+build() {
+    cd ${pkgname}
+
+    pnpm install --frozen-lockfile --strict-peer-dependencies
+    pnpm tauri build --bundles none
+    cat >> tauri.desktop << EOF
+[Desktop Entry]
+Categories=Development
+Comment=Simple code coverage visualization tool for tarpaulin
+Exec=tarp
+Icon=tarp
+Name=tarp
+Terminal=false
+Type=Application
+EOF
+
+}
+
+package() {
+    cd ${pkgname}
+
+    install -Dm 755 "src-tauri/target/release/tarp" "${pkgdir}/usr/bin/tarp"
+    install -Dm 644 "tauri.desktop" "${pkgdir}/usr/share/applications/tauri.desktop"
+
+    install -Dm 644 "src-tauri/icons/128x128@2x.png" "${pkgdir}/usr/share/icons/hicolor/256x256/apps/tarp.png"
+    install -Dm 644 "src-tauri/icons/128x128.png" "${pkgdir}/usr/share/icons/hicolor/128x128/apps/tarp.png"
+    install -Dm 644 "src-tauri/icons/32x32.png" "${pkgdir}/usr/share/icons/hicolor/32x32/apps/tarp.png"
+}
