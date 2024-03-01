@@ -1,7 +1,7 @@
 # Maintainer: Mike Rivnak <rivnakm1@gmail.com>
 pkgname=tarp-git
 _pkgname=tarp
-pkgver=20240229.r12
+pkgver=20240229.r13
 pkgrel=1
 pkgdesc="Simple code coverage visualization tool for tarpaulin"
 arch=(any)
@@ -29,7 +29,16 @@ sha512sums=('SKIP')
 
 pkgver() {
 	cd ${pkgname}
+
 	printf "%s.r%s" "$(git show -s --format=%ci main | sed "s/\ .*//g;s/-//g")" "$(git rev-list --count HEAD)"
+}
+
+prepare() {
+    cd ${pkgname}
+
+	version="$(git describe --tags --abbrev=0)-$(git rev-parse --short HEAD)"
+    version="${version#v}"
+    sed -i "s/0\.0\.0/$version/g" src-tauri/tauri.conf.json
 }
 
 build() {
